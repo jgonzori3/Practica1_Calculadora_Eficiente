@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora</title>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+    const vaciar = () => {
+      document.getElementById("pantalla").value = "";
+      
+    }
+
+    let valor_Almacenado;
+    let sumator;
+    let multiplicacion;
+
+    const cuadrado = () => {
+      let num = document.getElementById("pantalla");
+      if(validar(num.value)){
+        validar(num.value);
+      } else {
+        num.value = num.value * num.value;
+        rellenar_info();
+      }
+    }
+
+    const mod = () => {
+      let num = document.getElementById("pantalla");
+      if(validar(num.value)){
+        validar(num.value);
+      } else {
+
+      num.value=Math.abs(num.value);
+      rellenar_info();
+      }
+    }
+
+    const fact = () =>{
+      let num = document.getElementById("pantalla");
+      if(validar(num.value)){
+        validar(num.value);
+      } else {
+
+
+      let total = 1;
+      for(i=1; i<=num.value;i++){
+        total = total * i;
+      }
+      num.value = total;
+      rellenar_info();
+      }
+    }
+
+    const add = () =>{
+      if(validar(document.getElementById("pantalla").value)){
+        validar(document.getElementById("pantalla").value);
+      }else{
+      let num = document.getElementById("pantalla");
+      valor_Almacenado=num.value;
+      sumator=true;
+      multiplicacion=false;
+      }
+    }
+    const mul = () =>{
+      if (validar(document.getElementById("pantalla").value)){
+        validar(document.getElementById("pantalla").value);
+      } else {
+      let num = document.getElementById("pantalla");
+      valor_Almacenado=num.value;
+      multiplicacion=true;
+      sumator=false;
+    }
+    }
+
+    const eq = () =>{
+      let num = document.getElementById("pantalla");
+      if(validar(num.value)){
+        validar(num.value);
+      }else{
+        if(sumator){
+        num.value=+num.value + +valor_Almacenado;
+        sumator=false;
+      } else if (multiplicacion){
+        num.value=+valor_Almacenado * +num.value;
+        multiplicacion=false;
+      } else {
+        num.value=num.value;
+      }
+      rellenar_info();
+    }
+  }
+
+    const sumatorio = () =>{
+      let num = document.getElementById("pantalla");
+      if(validar(num.value)){
+        validar(num.value);
+      } else {
+
+
+      let array_Sum=num.value.split(",");
+      let suma=0;
+      for(i=0;i<array_Sum.length;i++){
+          suma+=+array_Sum[i];
+      }
+      num.value=suma;
+      rellenar_info();
+    }
+    }
+
+    const ordenar = () =>{
+      let num = document.getElementById("pantalla");
+      if(validar(num.value)){
+        validar(num.value);
+      } else {
+
+
+      let array_orden=num.value.split(",").sort((a,b) => a-b);
+      num.value=array_orden;
+      rellenar_info();
+      }
+    }
+
+    
+    const revertir = () =>{
+      let num = document.getElementById("pantalla");
+      if(validar(num.value)){
+        validar(num.value);
+      } else {
+
+
+      let array_orden=num.value.split(",").reverse();
+      num.value=array_orden;
+      rellenar_info();
+      }
+    }
+
+    const quitar = () =>{
+      let num = document.getElementById("pantalla");
+      if(validar(num.value)){
+        validar(num.value);
+      } else {
+
+
+      let array_normal=num.value.split(",");
+      array_normal.length=array_normal.length-1;
+      num.value=array_normal;
+      rellenar_info();
+    }
+  }
+
+/*
+    const validar = (contentw) => {
+  
+    if(contentw.includes(",")){
+     let arrayjj = contentw.split(",");
+     
+    return arrayjj.every((elemw)=>{ return validar(elemw);})
+
+    }else{
+     let isNotNumber = isNaN(contentw);
+     if(isNotNumber){
+         document.getElementById("pantalla").value = "Error";
+     }
+     return isNotNumber;
+        }
+    }*/
+
+
+    const validar = (conteni) => {
+      if(conteni.includes(",")){
+        let array = conteni.split(",");
+        return array.every((elem)=>{return validar(elem);})
+      }else{
+        let Innn=isNaN(conteni);
+        if(Innn){
+          document.getElementById("pantalla").value="error";
+        }
+        return Innn;
+      } 
+    }
+/*
+        if(contenido.includes(",")){
+          let array=contenido.split(",");
+          return array.every((elemento)=>{return validar(elemento);});
+        } else {
+          let isnotanumber = isNaN(contenido);
+          if(isnotanumber){
+            document.getElementById("pantlla").value="error";
+            return false;
+          }
+          return true;
+        }*/
+        
+    
+
+
+    const rellenar_info = () => {
+
+      let resultado = document.getElementById("pantalla");
+
+
+      let mensaje="";
+      if(+resultado.value<100){
+        mensaje="Info: El resultado es menor que 100";
+      }
+      else if(100<= +resultado.value && +resultado.value<=200){
+        mensaje="Info: El resultado está entre 100 y 200";
+      }
+      else if(+resultado.value>200){
+        mensaje="Info: El resultado es superior a 200";
+      }
+      else{
+        mensaje="informacion sore el resultado";
+      }
+
+      let informacion = document.getElementById("info");
+      informacion.innerHTML = mensaje;
+    }
+
+
+
+  </script>
+
+
+</head>
+<body>
+  <h1> CALCULADORA DE CORE </h1>
+  Número:
+  <input type="text" id="pantalla" onclick="vaciar()">
+  <h2  id= "info" class="grande" title="Info sobre el número" >
+   Info sobre el número
+  </h2>
+  <h3>
+    Operaciones unitarias
+  </h3>
+  <button id="cuadrado" onclick="cuadrado()">x<sup>2</sup></button>
+  <button id="modulo" onclick="mod()">|x|</button>
+  <button id="factorial" onclick="fact()">x!</button>
+  <h4>
+    Operaciones binarias
+  </h4>
+  <button id="multiplicacion" onclick="mul()">*</button>
+  <button id="suma" onclick="add()">+</button>
+  <button id="igual" onclick="eq()">=</button>
+  <h5>
+    Operaciones en formato CSV
+  </h5>
+  <button id="sumatorio" onclick="sumatorio()">Σx</button>
+  <button id="ordenar" onclick="ordenar()">ordenar</button>
+  <button id="revertir" onclick="revertir()">revertir</button>
+  <button id="quitar" onclick="quitar()">quitar</button>
+ </body>
+</html>
